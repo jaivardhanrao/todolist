@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #522b47;
+      }
+
+      .main {
+        margin-top: 5rem;
+        height: 70vh;
+        width: 50vw;
+        border: 0.3vw solid #006e90;
+        border-radius: 4vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f3ffb9;
+        /* box-shadow: 0px 0px 30px .1px #F3FFB9; */
+      }
+
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 5vh;
+        width: 20vw;
+        /* border: 0px solid red; */
+        color: #006e90;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+        font-size: 2rem;
+        font-weight: 600;
+      }
+
+      .lists {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1vh;
+        column-gap: 1vw;
+      }
+
+      .list-in {
+        height: 55vh;
+        width: 23vw;
+        border: 3px solid #006e90;
+        border-radius: 1vh;
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        scrollbar-width: thin;
+        overflow-x: hidden;
+      }
+
+      .task,
+      .taskDone {
+        margin-top: 1vh;
+        margin-bottom: 1vh;
+        margin-left: 1.3vw;
+        margin-right: 1vw;
+        height: 5vh;
+        width: 19vw;
+        border-radius: 1vh;
+        display: flex; /* Use flexbox for alignment */
+        align-items: center;
+        justify-content: space-between; /* Text on left, delete icon on right */
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+        font-weight: 700;
+        overflow: hidden; /* Prevent overflow */
+        white-space: nowrap; /* Prevent text wrapping */
+        text-overflow: ellipsis; /* Show ellipsis (...) for overflowing text */
+        padding-left: 0.5vw; /* Space between text and left edge */
+      }
+
+      .task {
+        border: solid 3px red;
+        background-color: rgba(223, 31, 31, 0.43);
+      }
+
+      .taskDone {
+        border: solid 3px green;
+        background-color: rgba(36, 222, 36, 0.486);
+      }
+
+      .del-img {
+        height: 3vh;
+        margin-left: auto;
+        margin-right: 0.5vw;
+        transition: all 50ms ease-in-out;
+      }
+
+      .del-img:hover {
+        transform: scale(1.39);
+      }
+
+      .tick {
+        height: 3.5vh;
+        width: 3.5vw;
+        margin-right: 0.5vw;
+      }
+
+      .buttons {
+        display: flex;
+        align-items: center;
+        margin-top: 1.5vh;
+      }
+
+      .allDone {
+        border-radius: 10vw;
+        background-color: rgba(144, 255, 88, 0.501);
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+        font-size: 2.7vh;
+        height: 5vh;
+        width: 12vw;
+        font-weight: 400;
+        cursor: pointer;
+        transition: 20ms all ease-in-out;
+      }
+      .allDone:hover {
+        background-color: rgb(144, 255, 88);
+      }
+
+      .addTask {
+        border-radius: 10vw;
+        background-color: rgba(88, 180, 255, 0.793);
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+        font-size: 2.7vh;
+        height: 5vh;
+        width: 10vw;
+        text-align: center;
+        font-weight: 400;
+        margin-right: 3vw;
+        cursor: pointer;
+      }
+
+      .addTask:hover {
+        background-color: rgba(88, 180, 255, 1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="title">To-Do List</div>
+      <div class="lists">
+        <div class="left list-in">
+          <!-- <div class="task">
+            <input type="checkbox" name="" class="tick" />
+            Be Kind
+            <img src="/39-512.webp" alt="delete" class="del-img" />
+          </div> -->
+        </div>
+        <div class="right list-in">
+          <!-- <div class="taskDone">
+                    hello
+                </div> -->
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="addTask">Add Task ➕</button>
+        <button class="allDone">All Completed</button>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    let addBtn = document.querySelector(".addTask");
+    let leftL = document.querySelector(".left");
+    let rightL = document.querySelector(".right");
+    let allCom = document.querySelector(".allDone");
+
+    // Adding a new task
+    addBtn.addEventListener("click", function () {
+      let taskName = prompt("Enter task name:");
+      if (!taskName) return; // khali task add nahi kr payega koi rudhar jaisa chutiya
+
+      // task element
+      let ele = document.createElement("div");
+      ele.classList.add("task");
+
+      //checkbox
+      let inp = document.createElement("input");
+      inp.type = "checkbox";
+      inp.classList.add("tick");
+      ele.appendChild(inp);
+
+      //text
+      let textNode = document.createTextNode(" " + taskName);
+      ele.appendChild(textNode);
+
+      // delete button
+      let img = document.createElement("img");
+      img.src = "/39-512.webp";
+      img.alt = "delete";
+      img.classList.add("del-img");
+      ele.appendChild(img);
+
+      // left list mein add task
+      leftL.appendChild(ele);
+
+      // check box mein even llistner
+      inp.addEventListener("change", function () {
+        if (ele.classList.contains("task")) {
+          ele.classList.replace("task", "taskDone");
+          rightL.appendChild(ele);
+        } else if (ele.classList.contains("taskDone")) {
+          ele.classList.replace("taskDone", "task");
+          leftL.appendChild(ele);
+        }
+      });
+
+      // delete button functional now
+      img.addEventListener("click", function () {
+        ele.remove();
+      });
+    });
+
+    // all task complete button
+    allCom.addEventListener("click", function () {
+      let tasks = leftL.querySelectorAll(".task"); // Select only tasks in the left list
+      tasks.forEach((task) => {
+        let checkbox = task.querySelector(".tick");
+        checkbox.checked = true;
+        task.classList.replace("task", "taskDone");
+        rightL.appendChild(task);
+      });
+    });
+
+    // agar koi task phle se hai html mein hi defined toh usko functional kra hai
+    document.querySelectorAll(".task").forEach((task) => {
+      let checkbox = task.querySelector(".tick");
+      let deleteBtn = task.querySelector(".del-img");
+
+      // checkbox
+      checkbox.addEventListener("change", function () {
+        if (task.classList.contains("task")) {
+          task.classList.replace("task", "taskDone");
+          rightL.appendChild(task);
+        } else if (task.classList.contains("taskDone")) {
+          task.classList.replace("taskDone", "task");
+          leftL.appendChild(task);
+        }
+      });
+
+      // delete
+      deleteBtn.addEventListener("click", function () {
+        task.remove();
+      });
+    });
+
+  </script>
+</html>
